@@ -1,0 +1,13 @@
+[project]
+name = "Caffeine"
+description = "Utilities for the Starbucks minecraft server."
+version = "0.1.0"
+natures = [ "eclipse", "maven" ]
+
+[dependencies]
+spigot-api-shaded = { type = "fetchFromMaven", url = "https://hub.spigotmc.org/nexus/repository/snapshots/", group_id = "org.spigotmc", artifact_id = "spigot-api", classifier = "shaded", javadoc = "https://hub.spigotmc.org/javadocs/spigot/" }
+
+[configuration.main]
+sources = [ "src/api/", "src/plugin/" ]
+dependencies = [ "spigot-api-shaded" ]
+targets = [ "targets/{configuration}/{project_name}-{configuration}-{version}.jar" ]

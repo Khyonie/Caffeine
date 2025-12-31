@@ -51,7 +51,7 @@ public class Caffeine extends JavaPlugin
 
 		if (filepath.exists())
 		{
-			PlayerData data = Results.tryFunction(() -> new PlayerData(new LilacDecoder(TomlVersion.V1_1_0).decode(filepath)))
+			PlayerData data = Results.tryFunction(() -> PlayerData.of(new LilacDecoder(TomlVersion.V1_1_0).decode(filepath)))
 				.ok()
 				.unwrapOr(new PlayerData());
 

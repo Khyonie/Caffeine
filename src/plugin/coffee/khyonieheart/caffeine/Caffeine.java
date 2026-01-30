@@ -7,10 +7,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import coffee.khyonieheart.anenome.operation.Results;
+import coffee.khyonieheart.caffeine.event.PlayerLoadDataListener;
 import coffee.khyonieheart.lilac.LilacDecoder;
 import coffee.khyonieheart.lilac.LilacEncoder;
 import coffee.khyonieheart.lilac.TomlEncoder;
@@ -25,7 +27,13 @@ public class Caffeine extends JavaPlugin
 	@Override
 	public void onEnable()
 	{
-		
+		if (!(new File(DATA_FOLDER_PATH).exists()))
+		{
+			new File(DATA_FOLDER_PATH).mkdir();
+		}
+
+		new CaffeineCommand().register();
+		Bukkit.getPluginManager().registerEvents(new PlayerLoadDataListener(), this);
 	}
 
 	@Override 
@@ -42,6 +50,12 @@ public class Caffeine extends JavaPlugin
 				e.printStackTrace();
 			}
 		});
+	}
+
+	public static PlayerData getPlayerData(
+		Player player
+	) {
+		return loadedPlayerData.get(player.getUniqueId());
 	}
 
 	public static PlayerData loadPlayerData(

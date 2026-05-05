@@ -34,10 +34,11 @@ public class CaffeineCommand extends TidalCommand
 		builder.append("§7Treecapitator has been ");
 
 		BaseComponent[] setting = data.isTreecapitatorEnabled() ? 
-			new Gradient("#7FFF7F", "#FFFFFF").createComponents("enabled.") : 
-			new Gradient("#FF7F7F", "#FFFFFF").createComponents("disabled.");
+			new Gradient("#7FFF7F", "#FFFFFF").createComponents("enabled") : 
+			new Gradient("#FF7F7F", "#FFFFFF").createComponents("disabled");
 
 		builder.append(setting);
+		builder.append("§7.");
 		player.spigot().sendMessage(builder.create());
 	}
 }

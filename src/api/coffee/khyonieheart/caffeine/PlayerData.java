@@ -6,8 +6,6 @@ import java.util.Map;
 
 import com.google.gson.annotations.Expose;
 
-import coffee.khyonieheart.anenome.operation.Option;
-
 public class PlayerData
 {
 	@Expose private boolean treecapitator = true;
@@ -79,9 +77,9 @@ public class PlayerData
 					continue;
 				}
 				
-				Object value = Option.of(data.get(field.getName()))
-					.map((s) -> ofGeneric(enumType, (String) s))
-					.unwrapOr(defaultValue);
+				String enumVariant = (String) data.get(field.getName());
+				Object value = enumVariant == null ? defaultValue
+					: ofGeneric(enumType, enumVariant);
 
 				try {
 					field.set(playerData, value);

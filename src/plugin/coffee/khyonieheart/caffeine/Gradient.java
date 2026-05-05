@@ -7,7 +7,7 @@ import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.TextComponent;
 
-class Gradient
+public class Gradient
 {
 	/**
 	 * Colors

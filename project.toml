@@ -16,5 +16,6 @@ sources = [ "src/api/", "src/plugin/" ]
 dependencies = [ "spigot-api-shaded", "anenome", "lilac", "tidal" ]
 includes = [ "plugin.yml", "default-config.toml" ]
 shaded = [ "anenome", "lilac", "tidal" ]
-targets = [ "targets/{configuration}/{project_name}-{configuration}-{version}.jar" ]
+targets = [ "targets/{configuration}/{project_name}-{configuration}-{version}.jar", "~/Servers/Minecraft/Gartrell/plugins/Caffeine.jar" ]
 java_version = 21
+compiler_flags.store_parameter_names = true

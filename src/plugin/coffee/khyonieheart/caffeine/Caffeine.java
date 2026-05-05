@@ -14,6 +14,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import coffee.khyonieheart.anenome.operation.Results;
 import coffee.khyonieheart.caffeine.event.PlayerLoadDataListener;
+import coffee.khyonieheart.caffeine.teleport.TeleportCommand;
 import coffee.khyonieheart.caffeine.teleport.TeleportListener;
 import coffee.khyonieheart.caffeine.util.JarUtils;
 import coffee.khyonieheart.lilac.LilacDecoder;
@@ -22,6 +23,7 @@ import coffee.khyonieheart.lilac.TomlConfiguration;
 import coffee.khyonieheart.lilac.TomlDecoder;
 import coffee.khyonieheart.lilac.TomlEncoder;
 import coffee.khyonieheart.lilac.TomlVersion;
+import coffee.khyonieheart.tidal.TidalPlugin;
 
 public class Caffeine extends JavaPlugin
 {
@@ -48,7 +50,9 @@ public class Caffeine extends JavaPlugin
 			return;
 		}
 
+		TidalPlugin.initDefaultCommands();
 		new CaffeineCommand().register();
+		new TeleportCommand().register();
 		Bukkit.getPluginManager().registerEvents(new PlayerLoadDataListener(), this);
 		Bukkit.getPluginManager().registerEvents(new TeleportListener(), this);
 

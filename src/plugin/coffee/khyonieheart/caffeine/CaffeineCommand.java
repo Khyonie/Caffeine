@@ -3,6 +3,7 @@ package coffee.khyonieheart.caffeine;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import coffee.khyonieheart.caffeine.util.Gradient;
 import coffee.khyonieheart.tidal.TidalCommand;
 import coffee.khyonieheart.tidal.structure.Root;
 import net.md_5.bungee.api.chat.BaseComponent;

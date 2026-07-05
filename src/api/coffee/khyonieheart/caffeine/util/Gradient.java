@@ -1,4 +1,4 @@
-package coffee.khyonieheart.caffeine;
+package coffee.khyonieheart.caffeine.util;
 
 import org.bukkit.command.CommandSender;
 
@@ -7,6 +7,9 @@ import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.TextComponent;
 
+/**
+ * Utility class for the creation of HSV text gradients.
+ */
 public class Gradient
 {
 	/**
@@ -16,6 +19,9 @@ public class Gradient
 	private final float hueDelta, saturationDelta, valueDelta;
 	private final HsvColor startHSV;
 
+	/**
+	 * Creates a new gradient from A to B, in the form of "#RRGGBB".
+	 */
 	public Gradient(
 		String colorA,
 		String colorB
@@ -37,6 +43,14 @@ public class Gradient
 		this.valueDelta = colorBHSV.value() - colorAHSV.value();
 	}
 
+	/**
+	 * Takes the gradient and applies it to the given string.
+	 *
+	 * @param input The string to apply this gradient to
+	 * @param formatting Optional, each char maps to a formatting option. See <a>https://minecraft.wiki/w/Formatting_codes</a>.
+	 *
+	 * @return An array of BaseComponents, to be sent to a player or the console.
+	 */
 	public BaseComponent[] createComponents(
 		String input,
 		char... formatting
@@ -84,6 +98,15 @@ public class Gradient
 		return builder.create();
 	}
 
+	/**
+	 * Convenience method to create and send a gradient as a text string to a player.
+	 *
+	 * @param target The recipient of the colored string
+	 * @param left The start color
+	 * @param right The end color
+	 * @param message The message to send
+	 * @param formatting Optional, each char maps to a formatting option. See <a>https://minecraft.wiki/w/Formatting_codes</a>.
+	 */
 	public static void sendGradient(
 		CommandSender target,
 		String left,

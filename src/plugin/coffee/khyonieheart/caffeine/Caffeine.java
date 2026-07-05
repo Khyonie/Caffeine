@@ -12,6 +12,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import coffee.khyonieheart.anenome.NotNull;
 import coffee.khyonieheart.caffeine.event.PlayerDeathChestListener;
 import coffee.khyonieheart.caffeine.event.PlayerLoadDataListener;
 import coffee.khyonieheart.caffeine.event.TreecapitatorListener;
@@ -69,6 +70,7 @@ public class Caffeine extends JavaPlugin
 	@Override 
 	public void onDisable()
 	{
+		// Save player data
 		TomlEncoder encoder = new LilacEncoder();
 		loadedPlayerData.forEach((uuid, data) -> {
 			File file = new File(DATA_FOLDER_PATH + uuid.toString() + ".toml");
@@ -87,6 +89,12 @@ public class Caffeine extends JavaPlugin
 		return pluginInstance;
 	}
 
+	/**
+	 * Retreives the current plugin configuration.
+	 *
+	 * @return
+	 */
+	@NotNull
 	public static TomlConfiguration getCaffeineConfig()
 	{
 		return pluginConfiguration;
@@ -110,12 +118,28 @@ public class Caffeine extends JavaPlugin
 		pluginConfiguration = new TomlConfiguration(data);
 	}
 
+	/**
+	 * Retreives a player's data file.
+	 *
+	 * @param player The player whose data should be retreived.
+	 *
+	 * @return The data file for the given player.
+	 */
+	@NotNull
 	public static PlayerData getPlayerData(
 		Player player
 	) {
 		return loadedPlayerData.get(player.getUniqueId());
 	}
 
+	/**
+	 * Loads a player's data file into memory. If no such file exists, it will be created at the player data folder.
+	 *
+	 * @param player The player whose data should be loaded.
+	 *
+	 * @returns The data file for the given player.
+	 */
+	@NotNull
 	public static PlayerData loadPlayerData(
 		Player player
 	) {
@@ -141,6 +165,11 @@ public class Caffeine extends JavaPlugin
 		return loadedPlayerData.get(player.getUniqueId());
 	}
 
+	/**
+	 * Stores a player's data file to the data folder path. (default "./Caffeine/")
+	 *
+	 * @param player Player to store data for
+	 */
 	public static void storePlayerData(
 		Player player
 	) {

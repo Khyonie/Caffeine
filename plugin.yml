@@ -1,0 +1,6 @@
+main: coffee.khyonieheart.caffeine.Caffeine
+name: Caffeine
+version: 0.1.0
+description: Utilities for Gartrell Minecraft server.
+api-version: 1.17
+author: Khyonie

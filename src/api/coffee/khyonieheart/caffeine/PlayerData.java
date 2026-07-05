@@ -4,12 +4,29 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+
 import com.google.gson.annotations.Expose;
 
 public class PlayerData
 {
-	@Expose private boolean treecapitator = true;
-	@Expose private boolean veinminer = true;
+	@SuppressWarnings("unused") // Schema tracker
+	private static final long SCHEMA_VERSION = 1;
+	public static final String BLANK_NICKNAME = "none";
+
+	@Expose 
+	private boolean 
+		treecapitator = true, 
+		veinminer = true;
+
+	@Expose 
+	private String 
+		nickname = BLANK_NICKNAME, 
+		username = "none";
+
+	@Expose 
+	private long schemaVersion = -1;
 
 	public PlayerData() {}
 
@@ -90,9 +107,40 @@ public class PlayerData
 
 				continue;
 			}
+
+			try {
+				if (field.getType().isPrimitive() && data.get(field.getName()) == null)
+				{
+					continue;
+				}
+				field.set(playerData, data.get(field.getName()));
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+				continue;
+			}
 		}
 
 		return playerData;
+	}
+
+	public void updateSchema(
+		Player player
+	) {
+		long currentSchema = this.schemaVersion;
+		// Schema 1: Store usernames
+		if (this.schemaVersion == -1)
+		{
+			this.schemaVersion = 1;
+			this.username = player.getName();
+			this.nickname = BLANK_NICKNAME;
+		}
+
+		if (currentSchema != this.schemaVersion)
+		{
+			Bukkit.getConsoleSender().sendMessage("§aUpdated " + player.getUniqueId().toString() + "'s data (schema " + currentSchema + " → " + this.schemaVersion + ")");
+			player.sendMessage("§aYour player data has been updated! If issues occur, please contact @khyonie on discord.");
+			player.sendMessage("§7Data schema: " + currentSchema + " → " + this.schemaVersion);
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -116,5 +164,27 @@ public class PlayerData
 		boolean setting
 	) {
 		this.treecapitator = setting;
+	}
+
+	public boolean isVeinminerEnabled()
+	{
+		return this.veinminer;
+	}
+
+	public void setVeinminerEnabled(
+		boolean setting
+	) {
+		this.veinminer = setting;
+	}
+
+	public String getNickname()
+	{
+		return this.nickname;
+	}
+
+	public void setNickname(
+		String nickname
+	) {
+		this.nickname = nickname;
 	}
 }

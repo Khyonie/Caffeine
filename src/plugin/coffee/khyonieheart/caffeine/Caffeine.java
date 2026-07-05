@@ -12,8 +12,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import coffee.khyonieheart.anenome.operation.Results;
+import coffee.khyonieheart.caffeine.event.PlayerDeathChestListener;
 import coffee.khyonieheart.caffeine.event.PlayerLoadDataListener;
+import coffee.khyonieheart.caffeine.event.TreecapitatorListener;
+import coffee.khyonieheart.caffeine.nickname.ChatListener;
+import coffee.khyonieheart.caffeine.nickname.NicknameCommand;
 import coffee.khyonieheart.caffeine.teleport.TeleportCommand;
 import coffee.khyonieheart.caffeine.teleport.TeleportListener;
 import coffee.khyonieheart.caffeine.util.JarUtils;
@@ -31,7 +34,7 @@ public class Caffeine extends JavaPlugin
 	private static TomlConfiguration pluginConfiguration;
 	public static final String DATA_FOLDER_PATH = "./Caffeine/";
 	public static final String PLUGIN_CONFIG_PATH = DATA_FOLDER_PATH + "caffeine.toml";
-	public static final String PLUGIN_VERSION = "0.1.0";
+	public static final String PLUGIN_VERSION = "0.1.4";
 
 	private static Caffeine pluginInstance;
 
@@ -53,8 +56,12 @@ public class Caffeine extends JavaPlugin
 		TidalPlugin.initDefaultCommands();
 		new CaffeineCommand().register();
 		new TeleportCommand().register();
+		new NicknameCommand().register();
 		Bukkit.getPluginManager().registerEvents(new PlayerLoadDataListener(), this);
 		Bukkit.getPluginManager().registerEvents(new TeleportListener(), this);
+		Bukkit.getPluginManager().registerEvents(new PlayerDeathChestListener(), this);
+		Bukkit.getPluginManager().registerEvents(new TreecapitatorListener(), this);
+		Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
 
 		pluginInstance = this;
 	}
@@ -116,9 +123,14 @@ public class Caffeine extends JavaPlugin
 
 		if (filepath.exists())
 		{
-			PlayerData data = Results.tryFunction(() -> PlayerData.of(new LilacDecoder(TomlVersion.V1_1_0).decode(filepath)))
-				.ok()
-				.unwrapOr(new PlayerData());
+			PlayerData data; 
+
+			try {
+				data = PlayerData.of(new LilacDecoder(TomlVersion.V1_1_0).decode(filepath));
+			} catch (Exception e) {
+				e.printStackTrace();
+				data = new PlayerData();
+			}
 
 			loadedPlayerData.put(player.getUniqueId(), data);
 
@@ -127,5 +139,22 @@ public class Caffeine extends JavaPlugin
 
 		loadedPlayerData.put(player.getUniqueId(), new PlayerData());
 		return loadedPlayerData.get(player.getUniqueId());
+	}
+
+	public static void storePlayerData(
+		Player player
+	) {
+		TomlEncoder encoder = new LilacEncoder();
+		UUID uuid = player.getUniqueId();
+		PlayerData data = loadedPlayerData.remove(uuid);
+
+		File file = new File(DATA_FOLDER_PATH + uuid.toString() + ".toml");
+		String toml = encoder.encode(data.toMap());
+		
+		try {
+			Files.writeString(file.toPath(), toml);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

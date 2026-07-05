@@ -28,6 +28,12 @@ public class CaffeineCommand extends TidalCommand
 		boolean enabled
 	) {
 		PlayerData data = Caffeine.getPlayerData(player);
+		if (enabled == data.isTreecapitatorEnabled())
+		{
+			player.sendMessage("§7Nothing changed.");
+			return;
+		}
+
 		data.setTreecapitatorEnabled(enabled);
 
 		ComponentBuilder builder = new ComponentBuilder();
@@ -40,5 +46,50 @@ public class CaffeineCommand extends TidalCommand
 		builder.append(setting);
 		builder.append("§7.");
 		player.spigot().sendMessage(builder.create());
+	}
+
+	@Root
+	public void veinminer(
+		Player player,
+		boolean enabled
+	) {
+		PlayerData data = Caffeine.getPlayerData(player);
+		if (enabled == data.isVeinminerEnabled())
+		{
+			player.sendMessage("§7Nothing changed.");
+			return;
+		}
+
+		data.setVeinminerEnabled(enabled);
+
+		ComponentBuilder builder = new ComponentBuilder();
+		builder.append("§7Veinminer has been ");
+
+		BaseComponent[] setting = data.isTreecapitatorEnabled() ? 
+			new Gradient("#7FFF7F", "#FFFFFF").createComponents("enabled") : 
+			new Gradient("#FF7F7F", "#FFFFFF").createComponents("disabled");
+
+		builder.append(setting);
+		builder.append("§7.");
+		player.spigot().sendMessage(builder.create());
+	}
+
+	@Root("ptime")
+	public void ptimeReset(
+		Player player
+	) {
+		player.resetPlayerTime();
+
+		player.sendMessage("§aReset your visual time!");
+	}
+
+	@Root
+	public void ptime(
+		Player player,
+		TimeSetting time
+	) {
+		player.setPlayerTime(time.getTimeInTicks(), false);
+
+		player.sendMessage("§aYour visual time has been updated! Use /caffeine ptime to reset it.");
 	}
 }

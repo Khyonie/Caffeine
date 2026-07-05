@@ -8,7 +8,6 @@ natures = [ "eclipse", "maven" ]
 spigot-api-shaded = { type = "fetchFromMaven", url = "https://hub.spigotmc.org/nexus/repository/snapshots/", group_id = "org.spigotmc", artifact_id = "spigot-api", classifier = "shaded", javadoc = "https://hub.spigotmc.org/javadocs/spigot/" }
 anenome = { type = "fetchFromGithub", username = "Khyonie", repository = "Anenome", tag = "v0.4.1" }
 lilac = { type = "fetchFromGithub", username = "Khyonie", repository = "Lilac", tag = "v2.1.2", asset = "Lilac-2.1.2-main" }
-#tidal = { type = "fetchFromGithub", username = "Khyonie", repository = "Tidal", tag = "v2.1.0", asset = "Tidal-main-2.1.0" }
 tidal = { type = "loadArchive", path = "lib/Tidal.jar" }
 
 [configuration.main]

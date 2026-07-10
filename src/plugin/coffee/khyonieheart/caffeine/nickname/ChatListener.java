@@ -22,10 +22,7 @@ public class ChatListener implements Listener
 	) {
 		event.setCancelled(true);
 		PlayerData data = Caffeine.getPlayerData(event.getPlayer());
-
-		String name = data.getNickname().equals("none")
-			? event.getPlayer().getName() 
-			: data.getNickname();
+		String name = data.getDisplayName(event.getPlayer());
 
 		String message = event.getMessage();
 

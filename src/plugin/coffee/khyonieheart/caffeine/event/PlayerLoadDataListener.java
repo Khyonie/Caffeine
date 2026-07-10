@@ -19,7 +19,7 @@ public class PlayerLoadDataListener implements Listener
 		data.updateSchema(event.getPlayer());
 
 		// Set player's tab list name
-		if (!data.getNickname().equals("none"))
+		if (data.hasNickname())
 		{
 			event.getPlayer().setPlayerListName(data.getNickname());
 		}

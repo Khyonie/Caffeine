@@ -35,7 +35,7 @@ public class NicknameCommand extends TidalCommand
 		
 		PlayerData data = Caffeine.getPlayerData(sender);
 		data.setNickname(nickname);
-		if (!data.getNickname().equals("none"))
+		if (data.hasNickname())
 		{
 			sender.setPlayerListName(data.getNickname());
 		}

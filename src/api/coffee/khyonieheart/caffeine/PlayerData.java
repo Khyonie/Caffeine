@@ -182,6 +182,17 @@ public class PlayerData
 		return this.nickname;
 	}
 
+	public boolean hasNickname()
+	{
+		return this.nickname != null && !this.nickname.isBlank() && !this.nickname.equals(BLANK_NICKNAME);
+	}
+
+	public String getDisplayName(
+		Player player
+	) {
+		return this.hasNickname() ? this.nickname : player.getName();
+	}
+
 	public void setNickname(
 		String nickname
 	) {

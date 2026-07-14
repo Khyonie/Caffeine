@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Tidal">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Downloads/Tidal.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
